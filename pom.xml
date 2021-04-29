@@ -28,6 +28,8 @@
     </license>
   </licenses>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <generated.from>package-typescript-archetype</generated.from>
     <license.organizationName>TODO: Enter Organization name</license.organizationName>
     <license.includes>**/*.js,**/*.ts</license.includes>
