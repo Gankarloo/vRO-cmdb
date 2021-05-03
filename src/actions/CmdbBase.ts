@@ -38,6 +38,7 @@ export class CmdbBase {
         // will be mocked.
         System.log("REST: Connecting to " + hostname + ":" + port);
         System.log("Action: " + args['Action'] + " Method: " + args['Method'])
-        return true
+        var result;
+        return result
     }
 }
