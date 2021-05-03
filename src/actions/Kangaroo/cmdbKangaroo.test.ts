@@ -1,5 +1,6 @@
 import { CmdbKangaroo } from "./CmdbKangaroo";
 
+
 describe("Test Kangaroo class", () => {
     var kangaroo;
     var AssetName = "asset2";
@@ -19,6 +20,8 @@ describe("Test Kangaroo class", () => {
         expect(Object.keys(kangaroo)).toContain("recordSize");
     })
     it("Adds", () => {
+        spyOn(kangaroo, "REST").and.returnValue(true);
+
         var regex = "^Kangaroo: added Name: " + AssetName + " with size: " + AssetSize + " Returned ID: \\d{1,4}$"
         var re = new RegExp(regex)
         expect(kangaroo.Add()).toMatch(re);
@@ -28,6 +31,16 @@ describe("Test Kangaroo class", () => {
     })
     it("Removes", () => {
         var AssetId = 45;
+        spyOn(kangaroo, "REST").and.returnValue(true);
         expect(kangaroo.Remove(AssetId)).toBe("RestAPI removed ID: " + AssetId);
+    })
+    it("Fails to Add", () => {
+        spyOn(kangaroo, "REST").and.returnValue(false);
+        expect( function() { kangaroo.Add(); }).toThrow("Kangaroo: Failed to add: asset2");
+    })
+    it("Fails to Remove", () => {
+        var AssetId = 45;
+        spyOn(kangaroo, "REST").and.returnValue(false);
+        expect( function() { kangaroo.Remove(AssetId); }).toThrow("Kangaroo: Failed to remove asset with ID: 45");
     })
 })
