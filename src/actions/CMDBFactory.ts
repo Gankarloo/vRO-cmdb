@@ -14,6 +14,8 @@ export class CMDBFactory {
     public getCMDB(name: string, recordName: string, recordSize: number): CmdbBase {
         if (name.toLowerCase().indexOf("kangaroo") >= 0) {
             return new CmdbKangaroo(recordName, recordSize);
+        } else {
+            throw new Error("Unknown CMDB: " + name );
         }
     }
 }
