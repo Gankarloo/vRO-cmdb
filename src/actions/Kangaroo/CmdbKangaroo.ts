@@ -35,16 +35,30 @@ export class CmdbKangaroo extends CmdbBase {
             Body : this.recordName + ";" + this.recordSize,
         }
         var execute = this.REST(conf.hostname, conf.port, restArgs);
-        var execute = true;
+        //var execute = true;
         if(execute == true) {
             return "Kangaroo: added Name: " + this.recordName + " with size: " + this.recordSize + " Returned ID: " + this.recordId;
         } else {
-            throw("Kangaroo: Failed to add" + this.recordName);
+            throw("Kangaroo: Failed to add: " + this.recordName);
         }
     }
     
     public Remove(recordId: number) {
-        return "RestAPI removed ID: " + recordId
+        var conf = {
+            hostname: "kangaroo.local",
+            port: 443
+        }
+        var restArgs = {
+            Action : "Delete",
+            Method : "Post",
+            Body : "assetID:" + this.recordId
+        }
+        var execute = this.REST(conf.hostname, conf.port, restArgs);
+        if(execute == true){
+            return "RestAPI removed ID: " + recordId
+        } else {
+            throw("Kangaroo: Failed to remove asset with ID: " + recordId)
+        }
     }
 
 }
