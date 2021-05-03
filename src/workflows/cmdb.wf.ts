@@ -33,15 +33,3 @@ export class CMDBRemove {
         System.log(cmdb.Remove(assetId));
     }
 }
-
-@Workflow ({
-    name: "test",
-    path: "CGI/Handson"
-})
-export class TEST {
-    public show(){
-        var resElemPath = "/cmdb/elements/resource";
-        var resElems = Server.getResourceElementCategoryWithPath(resElemPath);
-        System.log(resElems.allResourceElements.keys.name);
-    }
-}
