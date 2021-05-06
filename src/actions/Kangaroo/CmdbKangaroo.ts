@@ -8,57 +8,80 @@
  * #L%
  */
 import { CmdbBase } from "../CmdbBase";
-//import * as config from '../../elements/resource/Kangaroo/cmdbKangaroo.json'
-
+import { invokeWorkflow } from "../invokeWorkflow";
 export class CmdbKangaroo extends CmdbBase {
+    settings(){
+        this.httpStatusOK = 200;
+        this.httpStatusFail = 400;
+    }
+
     public Add() {
-        this.recordId = this.getRandomInt()
+        this.recordId = this.getRandomInt();
 
-        // build arguments
-        //var conf;
-        /* var resElemPath = "/cmdb/elements/resource";
-        var resElems = Server.getResourceElementCategoryWithPath(resElemPath);
-        
-        resElems.resourceElements.forEach(function(entry){
-            if(entry.name == 'cmdbKangaroo.json'){
-                conf = entry.getContentAsMimeAttachment();
-            }
-        }) */
+        let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
+        let restContent = JSON.stringify({              // html body
+            name : this.recordName,
+            size : this.recordSize
+        })
+        let restAcceptHeaders = ['*/*'];
+        let inputs:Record<string, any> = {
+            content: restContent,
+            acceptHeaders: restAcceptHeaders,
+            defaultContentType: "application/json",
+        }
+        let settings:Record<string, any> = {
+            type: 'REST',                                       // Type of Workflow
+            restHostID: '45767ca5-a644-4a66-8f78-d6dcc257aa07', // REST Host "kangaroo"
+            restOperationID: '45767ca5-a644-4a66-8f78-d6dcc257aa07:698d3086-5442-4b7b-9b3c-14940d716d98', // REST Operation "Create Record"
+        }
+        let runWf = invokeWorkflow(wfId,inputs,settings);
 
-        var conf = {
-            hostname: "kangaroo.local",
-            port: 443
-        }
-        var restArgs = {
-            Action : "add",
-            Method : "Post",
-            Body : this.recordName + ";" + this.recordSize,
-        }
-        var execute = this.REST(conf.hostname, conf.port, restArgs);
-        //var execute = true;
-        if(execute == true) {
+        if(runWf['statusCode'] == this.httpStatusOK) {
             return "Kangaroo: added Name: " + this.recordName + " with size: " + this.recordSize + " Returned ID: " + this.recordId;
+        } else if(runWf['statusCode'] == this.httpStatusFail){
+            throw new Error("Kangaroo: Failed to add: " + this.recordName + " REST return code: " + runWf['statusCode']);
         } else {
-            throw("Kangaroo: Failed to add: " + this.recordName);
+            throw new Error("Kangaroo: Unknown return code from REST call: " + runWf['statusCode']);
         }
     }
-    
+    /**
+     * 
+     * @param recordId 
+     * @returns 
+     */
     public Remove(recordId: number) {
-        var conf = {
-            hostname: "kangaroo.local",
-            port: 443
+        /* var Body = '';
+        var restobj = new RESTobject(
+            "kangaroo.local", 443, "/api/record/" + recordId,"DELETE",200,400, Body
+        )
+        var execute = this.REST(restobj); */
+        let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
+        let restAcceptHeaders = ['*/*'];
+        let inputs:Record<string, any> = {
+            param_0: recordId,                              // First and only parameter is the ID
+            acceptHeaders: restAcceptHeaders,
         }
-        var restArgs = {
-            Action : "Delete",
-            Method : "Post",
-            Body : "assetID:" + this.recordId
+        let settings:Record<string, any> = {
+            type: 'REST',                                       // Type of Workflow
+            restHostID: '45767ca5-a644-4a66-8f78-d6dcc257aa07', // REST Host "kangaroo"
+            restOperationID: '45767ca5-a644-4a66-8f78-d6dcc257aa07:786c338f-40ed-45a8-b6b3-348ecd37497e', // REST Operation "Delete Record"
         }
-        var execute = this.REST(conf.hostname, conf.port, restArgs);
-        if(execute == true){
+        let runWf = invokeWorkflow(wfId,inputs,settings);
+
+        if(runWf['statusCode'] == this.httpStatusOK) {
+            return "Kangaroo: removed ID: " + recordId
+        } else if(runWf['statusCode'] == this.httpStatusFail){
+            throw new Error("Kangaroo: Failed to remove asset with ID: " + recordId);
+        } else {
+            throw new Error("Kangaroo: Unknown return code from REST call: " + runWf['statusCode']);
+        }
+
+
+        /* if(execute == true){
             return "RestAPI removed ID: " + recordId
         } else {
             throw("Kangaroo: Failed to remove asset with ID: " + recordId)
-        }
+        } */
     }
 
 }
