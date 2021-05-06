@@ -18,15 +18,9 @@ describe("Test Base class CmdbBase", () => {
         expect(Object.keys(cmdb)).toContain("recordName");
         expect(Object.keys(cmdb)).toContain("recordSize");
     })
-    it("Adds", () => {
-        var regex = "^RestAPI: added Name: " + AssetName + " with size: " + AssetSize + " Returned ID: \\d{1,4}$"
-        var re = new RegExp(regex)
-        expect(cmdb.Add()).toMatch(re);
-    })
-    it("has now property recordID", () => {
-        expect(Object.keys(cmdb)).toContain("recordId");
-    })
-    it("Removes", () => {
-        expect(cmdb.Remove(10)).toBe("RestAPI removed ID: 10");
+    it("Generates a random number", () => {
+        let regex = "\\d{1,4}"
+        let re = new RegExp(regex);
+        expect(cmdb.getRandomInt()).toMatch(re);
     })
 })
