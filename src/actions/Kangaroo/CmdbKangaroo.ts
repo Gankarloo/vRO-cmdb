@@ -11,12 +11,15 @@ import { CmdbBase } from "../CmdbBase";
 import { invokeWorkflow } from "../invokeWorkflow";
 export class CmdbKangaroo extends CmdbBase {
     settings(){
-        this.httpStatusOK = 200;
-        this.httpStatusFail = 400;
+        this.httpStatusOK = {min: 200, max: 200};
+        this.httpStatusFail = {min: 400, max: 400};
     }
 
+    /**
+     * 
+     * @returns 
+     */
     public Add() {
-        this.recordId = this.getRandomInt();
 
         let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
         let restContent = JSON.stringify({              // html body
@@ -36,9 +39,9 @@ export class CmdbKangaroo extends CmdbBase {
         }
         let runWf = invokeWorkflow(wfId,inputs,settings);
 
-        if(runWf['statusCode'] == this.httpStatusOK) {
-            return "Kangaroo: added Name: " + this.recordName + " with size: " + this.recordSize + " Returned ID: " + this.recordId;
-        } else if(runWf['statusCode'] == this.httpStatusFail){
+        if(runWf['statusCode'] >= this.httpStatusOK.min && runWf['statusCode'] <= this.httpStatusOK.max) {
+            return "Kangaroo: added Name: " + this.recordName + " with size: " + this.recordSize;
+        } else if (runWf['statusCode'] >= this.httpStatusFail.min && runWf['statusCode'] <= this.httpStatusFail.max) {
             throw new Error("Kangaroo: Failed to add: " + this.recordName + " REST return code: " + runWf['statusCode']);
         } else {
             throw new Error("Kangaroo: Unknown return code from REST call: " + runWf['statusCode']);
@@ -50,11 +53,7 @@ export class CmdbKangaroo extends CmdbBase {
      * @returns 
      */
     public Remove(recordId: number) {
-        /* var Body = '';
-        var restobj = new RESTobject(
-            "kangaroo.local", 443, "/api/record/" + recordId,"DELETE",200,400, Body
-        )
-        var execute = this.REST(restobj); */
+
         let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
         let restAcceptHeaders = ['*/*'];
         let inputs:Record<string, any> = {
@@ -68,20 +67,13 @@ export class CmdbKangaroo extends CmdbBase {
         }
         let runWf = invokeWorkflow(wfId,inputs,settings);
 
-        if(runWf['statusCode'] == this.httpStatusOK) {
+        if(runWf['statusCode'] >= this.httpStatusOK.min && runWf['statusCode'] <= this.httpStatusOK.max) {
             return "Kangaroo: removed ID: " + recordId
-        } else if(runWf['statusCode'] == this.httpStatusFail){
+        } else if (runWf['statusCode'] >= this.httpStatusFail.min && runWf['statusCode'] <= this.httpStatusFail.max) {
             throw new Error("Kangaroo: Failed to remove asset with ID: " + recordId);
         } else {
             throw new Error("Kangaroo: Unknown return code from REST call: " + runWf['statusCode']);
         }
-
-
-        /* if(execute == true){
-            return "RestAPI removed ID: " + recordId
-        } else {
-            throw("Kangaroo: Failed to remove asset with ID: " + recordId)
-        } */
     }
 
 }
