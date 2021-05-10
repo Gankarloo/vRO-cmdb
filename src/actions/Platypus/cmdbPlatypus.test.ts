@@ -27,9 +27,6 @@ describe("Test cmdbPlatypus class", () => {
         let re = new RegExp(regex)
         expect(cmdb.Add()).toMatch(re);
     })
-    xit("has now property recordID", () => {
-        expect(Object.keys(cmdb)).toContain("recordId");
-    })
     it("Fails to Add", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400, contentAsString:json});
         expect( function() { cmdb.Add(); }).toThrowError("Platypus: Failed to add: asset2, REST return code: 400");

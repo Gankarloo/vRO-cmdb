@@ -33,9 +33,6 @@ describe("Test cmdbWombat class", () => {
         let re = new RegExp(regex)
         expect(cmdb.Add()).toMatch(re);
     })
-    xit("has now property recordID", () => {
-        expect(Object.keys(cmdb)).toContain("recordId");
-    })
     it("Fails to Add", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400});
         expect( function() { cmdb.Add(); }).toThrowError("Wombat: Failed to add: asset2 REST return code: 400");

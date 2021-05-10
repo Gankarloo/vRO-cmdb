@@ -36,9 +36,6 @@ describe("Test Kangaroo class", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:500});
         expect( function() { cmdb.Add(); }).toThrowError("Kangaroo: Unknown return code from REST call: 500");
     })
-    xit("has now property recordID", () => {
-        expect(Object.keys(cmdb)).toContain("recordId");
-    })
     it("Removes", () => {
         let AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:200});
@@ -57,18 +54,29 @@ describe("Test Kangaroo class", () => {
 })
 
 describe("Try to mock vRO specific classes", () => {
+    //let getWorkflowWithIdSpy, executeSpy;
+    //class RESTHostManagerMock extends RESTHostManager {
+    //class RESTHostManager {
+    //    gethost(var1:any){return true};
+    //}
+    beforeEach(() => {
+        //getWorkflowWithIdSpy = jasmine.createSpy('getWorkflowWithId');
+        //executeSpy = jasmine.createSpy('execute');
+
+    });
+
     xit("Test1", () => {
         /* class Server {
             public getWorkflowWithId(var1: any) {
                 return true;
             }
-        }
+        }*/
         class RESTHostManager {
             public getHost(var1: any) {
-                return new RESTHost;
+                return true;
             }
         }
-        class RESTHost {
+        /*class RESTHost {
             public getOperation(var1: any) {
                 return new RESTOperation;
             }
@@ -112,7 +120,8 @@ describe("Try to mock vRO specific classes", () => {
         //mockgetModule.and.returnValue(true);
         //mockexecute.and.returnValue(true);
         //mockgetOutpurParameters.and.returnValue({statusCode: 200});
-
+        
+        const spy = spyOn(RESTHostManager.prototype, 'getHost').and.returnValue(true);
         let AssetName = "asset2";
         let AssetSize = 5;
         let cmdb = new CmdbKangaroo(AssetName, AssetSize);
