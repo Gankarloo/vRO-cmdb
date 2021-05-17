@@ -11,6 +11,8 @@
       "ES2015.Promise",
       "ES2017.String"
     ],
-    "experimentalDecorators": true
-  }
+    "experimentalDecorators": true,
+    "strict": true
+  },
+  //"exclude": ["./src/**/*.test.ts"],
 }

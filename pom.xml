@@ -28,6 +28,8 @@
     </license>
   </licenses>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <generated.from>package-typescript-archetype</generated.from>
     <license.organizationName>TODO: Enter Organization name</license.organizationName>
     <license.includes>**/*.js,**/*.ts</license.includes>
@@ -39,6 +41,20 @@
       <artifactId>vro</artifactId>
       <type>pom</type>
       <version>7.0.13</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.vmware.pscoe.library.ts</groupId>
+      <artifactId>mock</artifactId>
+      <type>package</type>
+      <version>2.0.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.vmware.pscoe.library.ts</groupId>
+      <artifactId>mock</artifactId>
+      <type>tgz</type>
+      <version>2.0.4</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
