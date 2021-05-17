@@ -14,8 +14,8 @@ interface statusRange {
 export class CmdbBase {
     recordName:string;
     recordSize:number;
-    httpStatusOK:statusRange;
-    httpStatusFail:statusRange;
+    httpStatusOK!:statusRange;
+    httpStatusFail!:statusRange;
 
     constructor(name:string, size:number) {
         this.recordName = name;

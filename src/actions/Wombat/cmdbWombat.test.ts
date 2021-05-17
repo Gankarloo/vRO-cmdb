@@ -2,7 +2,7 @@ import * as WF from "../invokeWorkflow";
 import { CmdbWombat } from "./cmdbWombat";
 
 describe("Test cmdbWombat class", () => {
-    let cmdb;
+    let cmdb:CmdbWombat;
     let AssetName = "asset2";
     let AssetSize = 5;
     

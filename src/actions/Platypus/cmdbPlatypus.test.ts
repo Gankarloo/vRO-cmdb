@@ -2,7 +2,7 @@ import * as WF from "../invokeWorkflow";
 import { cmdbPlatypus } from "./cmdbPlatypus";
 
 describe("Test cmdbPlatypus class", () => {
-    let cmdb;
+    let cmdb:cmdbPlatypus;
     let AssetName = "asset2";
     let AssetSize = 5;
     let json = JSON.stringify({transactionId: 8});

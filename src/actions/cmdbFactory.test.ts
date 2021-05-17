@@ -16,7 +16,7 @@ describe("Test the Factory", () => {
         let kangaroo = factory.getCMDB(name,recordName,recordSize);
 
         expect(kangaroo instanceof CmdbKangaroo).toBe(true);
-        expect(kangaroo).toEqual(jasmine.objectContaining({
+        expect(Object(kangaroo)).toEqual(jasmine.objectContaining({
             recordName: recordName,
             recordSize: recordSize,
             httpStatusOK: httpOK,
@@ -33,7 +33,7 @@ describe("Test the Factory", () => {
         let wombat = factory.getCMDB(name,recordName,recordSize);
 
         expect(wombat instanceof CmdbWombat).toBe(true);
-        expect(wombat).toEqual(jasmine.objectContaining({
+        expect(Object(wombat)).toEqual(jasmine.objectContaining({
             recordName: recordName,
             recordSize: recordSize,
             httpStatusOK: httpOK,
@@ -50,7 +50,7 @@ describe("Test the Factory", () => {
         let platypus = factory.getCMDB(name,recordName,recordSize);
 
         expect(platypus instanceof cmdbPlatypus).toBe(true);
-        expect(platypus).toEqual(jasmine.objectContaining({
+        expect(Object(platypus)).toEqual(jasmine.objectContaining({
             recordName: recordName,
             recordSize: recordSize,
             httpStatusOK: httpOK,

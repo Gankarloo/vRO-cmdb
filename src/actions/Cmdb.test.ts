@@ -1,7 +1,7 @@
 import { CmdbBase } from "./CmdbBase"
 
 describe("Test Base class CmdbBase", () => {
-    let cmdb;
+    let cmdb:CmdbBase;
 
     beforeAll(() => {
         cmdb = new CmdbBase("asset1",10)
