@@ -1,6 +1,5 @@
 //import * as RESTutils from "../rest";
 import { VroMock } from "com.vmware.pscoe.library.ts.mock/VroMock";
-import { Workflow } from "vrotsc-annotations";
 import * as WF from "../invokeWorkflow";
 import { CmdbKangaroo } from "./CmdbKangaroo";
 
@@ -10,7 +9,7 @@ describe("Test Kangaroo class", () => {
     let AssetName = "asset2";
     let AssetSize = 5;
     beforeAll(() => {
-        cmdb = new CmdbKangaroo(AssetName, AssetSize);
+        cmdb = new CmdbKangaroo();
     })
     it("is an object", () => {
         expect(CmdbKangaroo instanceof Object).toBe(true);
@@ -18,7 +17,7 @@ describe("Test Kangaroo class", () => {
     it("is an object", () => {
         expect(cmdb instanceof Object).toBe(true);
     })
-    it("has the right properties", () => {
+    xit("has the right properties", () => {
         expect(Object.keys(cmdb)).toContain("recordName");
         expect(Object.keys(cmdb)).toContain("recordSize");
     })
@@ -27,15 +26,15 @@ describe("Test Kangaroo class", () => {
 
         let regex = "^Kangaroo: added Name: " + AssetName + " with size: " + AssetSize + "$"
         let re = new RegExp(regex)
-        expect(cmdb.Add()).toMatch(re);
+        expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Fails to Add", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400});
-        expect( function() { cmdb.Add(); }).toThrowError("Kangaroo: Failed to add: asset2 REST return code: 400");
+        expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Kangaroo: Failed to add: asset2 REST return code: 400");
     })
     it("Fails to Add with unknown status code", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:500});
-        expect( function() { cmdb.Add(); }).toThrowError("Kangaroo: Unknown return code from REST call: 500");
+        expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Kangaroo: Unknown return code from REST call: 500");
     })
     it("Removes", () => {
         let AssetId = 45;

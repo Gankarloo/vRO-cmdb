@@ -7,9 +7,15 @@
  * TODO: Define header text
  * #L%
  */
-import { CmdbBase } from "../CmdbBase";
+import { ICmdb, IstatusRange } from "../CmdbBase";
 import { invokeWorkflow } from "../invokeWorkflow";
-export class CmdbKangaroo extends CmdbBase {
+//export class CmdbKangaroo extends CmdbBase {
+export class CmdbKangaroo implements ICmdb {
+    recordName!:string;
+    recordSize!:number;
+    httpStatusOK:IstatusRange = {min: 200, max: 200};
+    httpStatusFail:IstatusRange = {min: 400, max: 400};
+
     settings(){
         this.httpStatusOK = {min: 200, max: 200};
         this.httpStatusFail = {min: 400, max: 400};
@@ -19,7 +25,10 @@ export class CmdbKangaroo extends CmdbBase {
      * 
      * @returns 
      */
-    public Add() {
+    public Add(recordName:string, recordSize:number) {
+        // save params on class object.
+        this.recordName = recordName;
+        this.recordSize = recordSize;
 
         let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
         let restContent = JSON.stringify({              // html body
@@ -66,6 +75,8 @@ export class CmdbKangaroo extends CmdbBase {
             restOperationID: '45767ca5-a644-4a66-8f78-d6dcc257aa07:786c338f-40ed-45a8-b6b3-348ecd37497e', // REST Operation "Delete Record"
         }
         let runWf = invokeWorkflow(wfId,inputs,settings);
+        let mytest;
+        
 
         if(runWf['statusCode'] >= this.httpStatusOK.min && runWf['statusCode'] <= this.httpStatusOK.max) {
             return "Kangaroo: removed ID: " + recordId

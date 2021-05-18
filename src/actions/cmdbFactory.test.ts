@@ -13,12 +13,12 @@ describe("Test the Factory", () => {
         let httpFail = {min: 400, max: 400};
         let name = "kangaroo";
         let factory = new CMDBFactory();
-        let kangaroo = factory.getCMDB(name,recordName,recordSize);
+        let kangaroo = factory.getCMDB(name);
 
         expect(kangaroo instanceof CmdbKangaroo).toBe(true);
         expect(Object(kangaroo)).toEqual(jasmine.objectContaining({
-            recordName: recordName,
-            recordSize: recordSize,
+            //recordName: undefined,
+            //recordSize: undefined,
             httpStatusOK: httpOK,
             httpStatusFail: httpFail,
             Add: jasmine.any(Function),
@@ -30,12 +30,12 @@ describe("Test the Factory", () => {
         let httpFail = {min: 400, max: 499};
         let name = "wombat";
         let factory = new CMDBFactory();
-        let wombat = factory.getCMDB(name,recordName,recordSize);
+        let wombat = factory.getCMDB(name);
 
         expect(wombat instanceof CmdbWombat).toBe(true);
         expect(Object(wombat)).toEqual(jasmine.objectContaining({
-            recordName: recordName,
-            recordSize: recordSize,
+            //recordName: recordName,
+            //recordSize: recordSize,
             httpStatusOK: httpOK,
             httpStatusFail: httpFail,
             Add: jasmine.any(Function),
@@ -47,12 +47,12 @@ describe("Test the Factory", () => {
         let httpFail = {min: 400, max: 400};
         let name = "platypus";
         let factory = new CMDBFactory();
-        let platypus = factory.getCMDB(name,recordName,recordSize);
+        let platypus = factory.getCMDB(name);
 
         expect(platypus instanceof cmdbPlatypus).toBe(true);
         expect(Object(platypus)).toEqual(jasmine.objectContaining({
-            recordName: recordName,
-            recordSize: recordSize,
+            //recordName: recordName,
+            //recordSize: recordSize,
             httpStatusOK: httpOK,
             httpStatusFail: httpFail,
             Add: jasmine.any(Function),

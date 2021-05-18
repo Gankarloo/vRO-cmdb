@@ -7,7 +7,7 @@ describe("Test cmdbWombat class", () => {
     let AssetSize = 5;
     
     beforeAll(() => {
-        cmdb = new CmdbWombat(AssetName, AssetSize);
+        cmdb = new CmdbWombat();
     })
     it("is an object", () => {
         expect(CmdbWombat instanceof Object).toBe(true);
@@ -15,7 +15,7 @@ describe("Test cmdbWombat class", () => {
     it("is an object", () => {
         expect(cmdb instanceof Object).toBe(true);
     })
-    it("has the right properties", () => {
+    xit("has the right properties", () => {
         expect(Object.keys(cmdb)).toContain("recordName");
         expect(Object.keys(cmdb)).toContain("recordSize");
     })
@@ -24,26 +24,26 @@ describe("Test cmdbWombat class", () => {
 
         let regex = "^Wombat: added Name: " + AssetName + " with size: " + AssetSize + "$"
         let re = new RegExp(regex)
-        expect(cmdb.Add()).toMatch(re);
+        expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Adds with statuscode in range", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:241});
 
         let regex = "^Wombat: added Name: " + AssetName + " with size: " + AssetSize + "$"
         let re = new RegExp(regex)
-        expect(cmdb.Add()).toMatch(re);
+        expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Fails to Add", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400});
-        expect( function() { cmdb.Add(); }).toThrowError("Wombat: Failed to add: asset2 REST return code: 400");
+        expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Wombat: Failed to add: asset2 REST return code: 400");
     })
     it("Fails to Add with statuscode in range", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:489});
-        expect( function() { cmdb.Add(); }).toThrowError("Wombat: Failed to add: asset2 REST return code: 489");
+        expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Wombat: Failed to add: asset2 REST return code: 489");
     })
     it("Fails to Add with unknown status code", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:500});
-        expect( function() { cmdb.Add(); }).toThrowError("Wombat: Unknown return code from REST call: 500");
+        expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Wombat: Unknown return code from REST call: 500");
     })
     it("Removes", () => {
         let AssetId = 45;

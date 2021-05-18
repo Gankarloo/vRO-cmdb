@@ -24,26 +24,25 @@ export class CMDBAdd {
      */
     public AddCMDB(cmdbName: string, assetName: string, assetSize: number) {
         let factory = new CMDBFactory();
-        let cmdb = factory.getCMDB(cmdbName, assetName, assetSize);
-        System.log(cmdb.Add())
+        let cmdb = factory.getCMDB(cmdbName);
+        System.log(cmdb.Add(assetName, assetSize));
     }
 }
 
 @Workflow ({
     name: "CMDB-Remove",
     path: "CGI/Handson",
+    presentation: "whattt",
 })
 export class CMDBRemove {
     /**
      * 
      * @param cmdbName 
-     * @param assetName 
-     * @param assetSize 
      * @param assetId 
      */
-    public RemoveCMDB(cmdbName: string, assetName: string, assetSize: number, assetId: number) {
+    public RemoveCMDB(cmdbName: string, assetId: number) {
         let factory = new CMDBFactory();
-        let cmdb = factory.getCMDB(cmdbName, assetName, assetSize);
+        let cmdb = factory.getCMDB(cmdbName);
         System.log(cmdb.Remove(assetId));
     }
 }

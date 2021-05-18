@@ -8,15 +8,25 @@
  * #L%
  */
 
-import { CmdbBase } from "../CmdbBase";
+import { ICmdb, IstatusRange } from "../CmdbBase";
 import { invokeWorkflow } from "../invokeWorkflow";
 
-export class cmdbPlatypus extends CmdbBase {
+//export class cmdbPlatypus extends CmdbBase {
+export class cmdbPlatypus implements ICmdb {
+    recordName!:string;
+    recordSize!:number;
+    httpStatusOK:IstatusRange = {min: 200, max:200};
+    httpStatusFail:IstatusRange = {min: 400, max:400};
+
     settings(){
         this.httpStatusOK = {min: 200, max:200};
         this.httpStatusFail = {min: 400, max:400};
     }
-    public Add() {
+    public Add(recordName:string, recordSize:number) {
+        // save params on class object.
+        this.recordName = recordName;
+        this.recordSize = recordSize;
+
         let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
         //#region Send transaction
         let restContent = JSON.stringify({

@@ -7,15 +7,24 @@
  * TODO: Define header text
  * #L%
  */
-import { CmdbBase } from "../CmdbBase";
+import { ICmdb, IstatusRange } from "../CmdbBase";
 import { invokeWorkflow } from "../invokeWorkflow";
 
-export class CmdbWombat extends CmdbBase {
+//export class CmdbWombat extends CmdbBase {
+export class CmdbWombat implements ICmdb {
+    recordName!:string;
+    recordSize!:number;
+    httpStatusOK:IstatusRange = {min: 200, max:299};
+    httpStatusFail:IstatusRange = {min: 400, max:499};
+
     settings(){
         this.httpStatusOK = {min: 200, max:299};
         this.httpStatusFail = {min: 400, max:499};
     }
-    public Add() {
+    public Add(recordName:string, recordSize:number) {
+        // save params on class object.
+        this.recordName = recordName;
+        this.recordSize = recordSize;
 
         let wfId = 'A18080808080808080808080808080808080808001299080088268176866967b3'; // Worflow "Invoke a REST operation"
         let restContent = `<CreateRecord><Name>${this.recordName}</Name><Size>${this.recordSize}</Size></CreateRecord>`;
