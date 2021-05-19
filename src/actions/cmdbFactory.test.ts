@@ -5,15 +5,15 @@ import { cmdbPlatypus } from "./Platypus/cmdbPlatypus";
 
 describe("Test the Factory", () => {
     let factory;
-    let recordName = "Asset2";
-    let recordSize = 38;
+    const recordName = "Asset2";
+    const recordSize = 38;
 
     it("Get's an Kangaroo object", () => {
-        let httpOK = {min: 200, max:200};
-        let httpFail = {min: 400, max: 400};
-        let name = "kangaroo";
-        let factory = new CMDBFactory();
-        let kangaroo = factory.getCMDB(name);
+        const httpOK = {min: 200, max:200};
+        const httpFail = {min: 400, max: 400};
+        const name = "kangaroo";
+        const factory = new CMDBFactory();
+        const kangaroo = factory.getCMDB(name);
 
         expect(kangaroo instanceof CmdbKangaroo).toBe(true);
         expect(Object(kangaroo)).toEqual(jasmine.objectContaining({
@@ -26,11 +26,11 @@ describe("Test the Factory", () => {
         }));
     })
     it("Get's an Wombat object", () => {
-        let httpOK = {min: 200, max:299};
-        let httpFail = {min: 400, max: 499};
-        let name = "wombat";
-        let factory = new CMDBFactory();
-        let wombat = factory.getCMDB(name);
+        const httpOK = {min: 200, max:299};
+        const httpFail = {min: 400, max: 499};
+        const name = "wombat";
+        const factory = new CMDBFactory();
+        const wombat = factory.getCMDB(name);
 
         expect(wombat instanceof CmdbWombat).toBe(true);
         expect(Object(wombat)).toEqual(jasmine.objectContaining({
@@ -43,11 +43,11 @@ describe("Test the Factory", () => {
         }));
     })
     it("Get's an Platypus object", () => {
-        let httpOK = {min: 200, max:200};
-        let httpFail = {min: 400, max: 400};
-        let name = "platypus";
-        let factory = new CMDBFactory();
-        let platypus = factory.getCMDB(name);
+        const httpOK = {min: 200, max:200};
+        const httpFail = {min: 400, max: 400};
+        const name = "platypus";
+        const factory = new CMDBFactory();
+        const platypus = factory.getCMDB(name);
 
         expect(platypus instanceof cmdbPlatypus).toBe(true);
         expect(Object(platypus)).toEqual(jasmine.objectContaining({

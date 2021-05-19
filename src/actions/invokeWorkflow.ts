@@ -16,28 +16,29 @@
  */
 export function invokeWorkflow(WorkflowId:string, WorkflowInputs:Record<string, any>,WorkflowSettings:Record<string,string>){
     const wf = Server.getWorkflowWithId(WorkflowId);
-    let wfTokens = [];
-    let wfInputs = new Properties();
+    const wfTokens = [];
+    const wfInputs = new Properties();
 
-    for(let input in WorkflowInputs){
+    for(const input in WorkflowInputs){
         wfInputs.put(input, WorkflowInputs[input])
-    };
+    }
 
     switch(WorkflowSettings['type']){
-        case "REST":
-            let rHost = RESTHostManager.getHost(WorkflowSettings['restHostID']);
-            let rOperation = rHost.getOperation(WorkflowSettings['restOperationID']);
+        case "REST": {
+            const rHost = RESTHostManager.getHost(WorkflowSettings['restHostID']);
+            const rOperation = rHost.getOperation(WorkflowSettings['restOperationID']);
             wfInputs.put('restOperation', rOperation);
             break;
+        }
     }
 
 
     // execute Workflow
-    let wfToken = wf.execute(wfInputs);
+    const wfToken = wf.execute(wfInputs);
     wfTokens.push(wfToken);
     // Wait for workflow to complete
     System.getModule('com.vmware.library.vc.basic').waitForCompletionForBatchWorkflow(wfTokens);
 
-    let wfOutputs = wfToken.getOutputParameters();
+    const wfOutputs = wfToken.getOutputParameters();
     return wfOutputs;
 }

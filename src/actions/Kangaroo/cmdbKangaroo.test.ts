@@ -1,13 +1,12 @@
 //import * as RESTutils from "../rest";
-import { VroMock } from "com.vmware.pscoe.library.ts.mock/VroMock";
 import * as WF from "../invokeWorkflow";
 import { CmdbKangaroo } from "./CmdbKangaroo";
 
 
 describe("Test Kangaroo class", () => {
     let cmdb:CmdbKangaroo;
-    let AssetName = "asset2";
-    let AssetSize = 5;
+    const AssetName: string = "asset2";
+    const AssetSize: number = 5;
     beforeAll(() => {
         cmdb = new CmdbKangaroo();
     })
@@ -24,8 +23,9 @@ describe("Test Kangaroo class", () => {
     it("Adds", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:200});
 
-        let regex = "^Kangaroo: added Name: " + AssetName + " with size: " + AssetSize + "$"
-        let re = new RegExp(regex)
+        //const regex = "^Kangaroo: added Name: " + AssetName + " with size: " + AssetSize + "$"
+        const regex = `^Kangaroo: added Name: ${AssetName} with size: ${AssetSize}$`
+        const re = new RegExp(regex)
         expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Fails to Add", () => {
@@ -37,17 +37,17 @@ describe("Test Kangaroo class", () => {
         expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Kangaroo: Unknown return code from REST call: 500");
     })
     it("Removes", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:200});
-        expect(cmdb.Remove(AssetId)).toBe("Kangaroo: removed ID: " + AssetId);
+        expect(cmdb.Remove(AssetId)).toBe(`Kangaroo: removed ID: ${AssetId}`);
     })
     it("Fails to Remove", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400});
         expect( function() { cmdb.Remove(AssetId); }).toThrowError("Kangaroo: Failed to remove asset with ID: 45");
     })
     it("Fails to Remove with unknown status code", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:500});
         expect( function() { cmdb.Remove(AssetId); }).toThrowError("Kangaroo: Unknown return code from REST call: 500");
     })

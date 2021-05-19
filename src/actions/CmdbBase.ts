@@ -21,7 +21,7 @@ export interface ICmdb {
     Add: (recordName:string, recordSize:number) => string,
     Remove: (recordId:number) => string,
 }
-export class CmdbBase {
+/* export class CmdbBase {
     recordName!:string;
     recordSize!:number;
     httpStatusOK!:IstatusRange;
@@ -35,30 +35,11 @@ export class CmdbBase {
 
     settings(){};
 
-    /**
-     * 
-     * @returns 
-     */
     Add() {
         return "Stub...";
     }
 
-    /**
-     * 
-     * @param recordId 
-     * @returns 
-     */
     Remove(recordId: number):string {
         return "Stub...";
     } 
-
-    /**
-     * 
-     * @returns 
-     */
-    /* getRandomInt(): number {
-        let min = 1;
-        let max = 1000;
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    } */
-}
+} */

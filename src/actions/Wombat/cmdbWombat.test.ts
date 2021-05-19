@@ -3,8 +3,8 @@ import { CmdbWombat } from "./cmdbWombat";
 
 describe("Test cmdbWombat class", () => {
     let cmdb:CmdbWombat;
-    let AssetName = "asset2";
-    let AssetSize = 5;
+    const AssetName = "asset2";
+    const AssetSize = 5;
     
     beforeAll(() => {
         cmdb = new CmdbWombat();
@@ -22,15 +22,16 @@ describe("Test cmdbWombat class", () => {
     it("Adds", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:200});
 
-        let regex = "^Wombat: added Name: " + AssetName + " with size: " + AssetSize + "$"
-        let re = new RegExp(regex)
+        //const regex = "^Wombat: added Name: " + AssetName + " with size: " + AssetSize + "$"
+        const regex = `^Wombat: added Name: ${AssetName} with size: ${AssetSize}$`
+        const re = new RegExp(regex)
         expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Adds with statuscode in range", () => {
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:241});
 
-        let regex = "^Wombat: added Name: " + AssetName + " with size: " + AssetSize + "$"
-        let re = new RegExp(regex)
+        const regex = `^Wombat: added Name: ${AssetName} with size: ${AssetSize}$`
+        const re = new RegExp(regex)
         expect(cmdb.Add(AssetName, AssetSize)).toMatch(re);
     })
     it("Fails to Add", () => {
@@ -46,27 +47,27 @@ describe("Test cmdbWombat class", () => {
         expect( function() { cmdb.Add(AssetName, AssetSize); }).toThrowError("Wombat: Unknown return code from REST call: 500");
     })
     it("Removes", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:200});
-        expect(cmdb.Remove(AssetId)).toBe("Wombat: removed ID: " + AssetId);
+        expect(cmdb.Remove(AssetId)).toBe(`Wombat: removed ID: ${AssetId}`);
     })
     it("Removes with statuscode in range", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:281});
-        expect(cmdb.Remove(AssetId)).toBe("Wombat: removed ID: " + AssetId);
+        expect(cmdb.Remove(AssetId)).toBe(`Wombat: removed ID: ${AssetId}`);
     })
     it("Fails to Remove", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:400});
         expect( function() { cmdb.Remove(AssetId); }).toThrowError("Wombat: Failed to remove asset with ID: 45");
     })
     it("Fails to Remove with statuscode in range", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:402});
         expect( function() { cmdb.Remove(AssetId); }).toThrowError("Wombat: Failed to remove asset with ID: 45");
     })
     it("Fails to Remove with unknown status code", () => {
-        let AssetId = 45;
+        const AssetId = 45;
         spyOn(WF, "invokeWorkflow").and.returnValue({statusCode:500});
         expect( function() { cmdb.Remove(AssetId); }).toThrowError("Wombat: Unknown return code from REST call: 500");
     })
